@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="logo font-bold text-xl flex items-center justify-center">
                 <span className='text-orange-500 font-extrabold text-2xl'>&lt;</span>
                 <span className='font-extrabold text-2xl text-white'>Pass</span>
-                <span className='text-orange-500 font-extrabold  text-2xl'>OP/&gt;</span>
+                <span className='text-orange-500 font-extrabold  text-2xl'>UP/&gt;</span>
             </div>
             <div className='flex items-center justify-center text-white'>
 

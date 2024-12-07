@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "appwrite": "^16.0.2",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.0",
+    "react-router": "^7.0.2",
     "react-toastify": "^10.0.6",
     "uuid": "^11.0.3"
   },
