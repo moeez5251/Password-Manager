@@ -1,10 +1,11 @@
 import React from 'react'
 import { Client, Account } from 'appwrite';
 import { useForm } from "react-hook-form";
-import { useRef, useState,useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink, useNavigate } from 'react-router';
+import Navbar from './navbar';
 const Signin = () => {
   let navigate = useNavigate();
   const projectid = import.meta.env.VITE_PROJECT_ID
@@ -12,8 +13,8 @@ const Signin = () => {
   const ref = useRef();
   const [inp, setinp] = useState("password")
   const client = new Client()
-  .setEndpoint('https://cloud.appwrite.io/v1')
-  .setProject(`${projectid}`);
+    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setProject(`${projectid}`);
   const account = new Account(client);
   const handleinp = () => {
     if (ref.current.innerHTML.trim() === "visibility") {
@@ -26,7 +27,7 @@ const Signin = () => {
     }
   }
   const onSubmit = async (data) => {
-    const promise =  account.createEmailPasswordSession(`${data.email1}`, `${data.password1}`);
+    const promise = account.createEmailPasswordSession(`${data.email1}`, `${data.password1}`);
     promise.then(function () {
       toast.success("Login Successfully ", {
 
@@ -41,7 +42,7 @@ const Signin = () => {
 
       });
       navigate("/main");
-    },async function (e) {
+    }, async function (e) {
       console.log(e);
       toast.error("Invalid email / password", {
         position: "top-right",
@@ -53,7 +54,6 @@ const Signin = () => {
         progress: undefined,
         theme: "dark",
       });
-      const result = await account.deleteSessions();
     });
 
   }
@@ -75,11 +75,12 @@ const Signin = () => {
       <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]">
 
       </div>
-      <div className=' flex items-center relative top-44 flex-col gap-10 signin-page'>
+      <Navbar />
+      <div className=' flex items-center relative sm:top-24 top-16 flex-col gap-10 signin-page'>
 
         <h2 className='text-white font-bold text-3xl'>Sign In</h2>
         <div className='flex flex-col w-full items-center '>
-          <form className='text-white flex flex-col gap-10 w-1/2' onSubmit={handleSubmit(onSubmit)}>
+          <form className='text-white flex flex-col  gap-6 sm:w-1/2 w-[80%]' onSubmit={handleSubmit(onSubmit)}>
             {errors.email1 ? <span className='text-center text-red-400 font-extrabold text-base'>Email is required</span> : errors.password1 ? <span className='text-center text-red-400 font-extrabold text-base'>Password is required</span> : ""}
 
             <input type='email' placeholder='Enter Your Email' className='text-sm py-2 px-4 rounded-lg  text-black font-bold outline-none placeholder:text-black' {...register("email1", { required: true })} />

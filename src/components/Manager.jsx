@@ -2,32 +2,52 @@ import React from 'react'
 import { useRef, useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Client, Databases, ID } from 'appwrite';
+import { Client, Databases, ID, Account } from 'appwrite';
 const Manager = () => {
     const projectid = import.meta.env.VITE_PROJECT_ID
     const DatabaseID = import.meta.env.VITE_DB
     const CollectionID = import.meta.env.VITE_CID
+    const [user, setuser] = useState({})
     const [form, setform] = useState({
         site: "",
         username: "",
         password: "",
-        id: null
+        id: null,
     })
     const [passwords, setpasswords] = useState([])
-    useEffect(() => {
-        (async function getting() {
-            const result = await databases.listDocuments(
-                `${DatabaseID}`,
-                `${CollectionID}`,
-            );
-            setpasswords(result.documents)
-        }())
-
-    }, [passwords])
     const client = new Client()
         .setEndpoint('https://cloud.appwrite.io/v1')
         .setProject(`${projectid}`);
     const databases = new Databases(client);
+    const account = new Account(client);
+    useEffect(() => {
+        (async () => {
+            let person = await account.get();
+            setuser(person);
+            toast.info('Fetching Passwords', {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+            });
+        })()
+
+    }, [])
+    useEffect(() => {
+        getting();
+    }, [user])
+    async function getting() {
+        const result = await databases.listDocuments(
+            `${DatabaseID}`,
+            `${CollectionID}`,
+        );
+        setpasswords(result.documents.filter(item => item.Name === user.$id))
+    }
+
     const ref = useRef();
     const passref = useRef();
     const hidepass = useRef([]);
@@ -61,22 +81,23 @@ const Manager = () => {
 
     const savepassword = async () => {
         if (form.id) {
-          await databases.getDocument(`${DatabaseID}`, `${CollectionID}`, form.id)
-          .then(async()=>{
+            await databases.getDocument(`${DatabaseID}`, `${CollectionID}`, form.id)
+                .then(async () => {
 
-              await databases.deleteDocument(
-                  `${DatabaseID}`,
-                  `${CollectionID}`,
-                  `${form.id}`)
-            })
+                    await databases.deleteDocument(
+                        `${DatabaseID}`,
+                        `${CollectionID}`,
+                        `${form.id}`)
+                })
         }
         if (form.site.trim() !== "" && form.username.trim() !== "" && form.password.trim() !== "") {
             await databases.createDocument(
                 `${DatabaseID}`,
                 `${CollectionID}`,
                 ID.unique(),
-                { "URL": form.site, "Username": form.username, "Password": form.password }
+                { "URL": form.site, "Username": form.username, "Password": form.password, "Name": user.$id }
             )
+            getting();
             toast('Password Added Successfully', {
                 position: "top-right",
                 autoClose: 3000,
@@ -120,6 +141,8 @@ const Manager = () => {
                 `${id}`
             ).then(() => {
                 setpasswords([...passwords].filter(item => item.$id !== id))
+                getting();
+
                 toast.success('Password Deleted Successfully', {
                     position: "top-right",
                     autoClose: 3000,
@@ -154,7 +177,7 @@ const Manager = () => {
                 </div>
                 <p className='text-orange-600  text-center text-lg font-sans'>Your own password manager</p>
                 <div className="inputs flex flex-col inp w-full p-5 gap-5 ">
-                    <input  autoComplete='off' value={form.site} onChange={handleinput} name='site' placeholder='Enter Website URL' className='font-[600] rounded-3xl border border-orange-500 w-full px-6 py-1' type="text" />
+                    <input autoComplete='off' value={form.site} onChange={handleinput} name='site' placeholder='Enter Website URL' className='font-[600] rounded-3xl border border-orange-500 w-full px-6 py-1' type="text" />
                     <div className=" flex  gap-3">
                         <input autoComplete='off' value={form.username} onChange={handleinput} name='username' id='user' placeholder='Enter Username' className='font-[600] rounded-3xl border border-orange-500 w-full px-6 py-1' type="text" />
                         <div className="relative">
@@ -177,7 +200,7 @@ const Manager = () => {
                     </lord-icon>
                 </button>
             </div>
-            <div className="passwords max-w-[70%] mx-auto">
+            <div className="passwords lg:max-w-[70%] max-w-[90%] mx-auto">
                 <h2 className='font-bold text-xl mb-2'>Your Passwords</h2>
                 {passwords.length === 0 && <div>No Password to show</div>}
                 {passwords.length !== 0 &&
