@@ -267,7 +267,7 @@ return (
                                     </td>
                                     <td className='font-medium text-center sm:py-2 sm:min-w-36 min-w-10 max-w-60'>
                                         <div className='flex items-center justify-center '>
-                                            <input name='pass-inp' ref={(r) => { hidepass.current[key] = r }} type="password" value={i.Password} className='bg-none outline-none w-[70px] max-w-[80px] ' disabled={true} />
+                                            <input name='pass-inp' ref={(r) => { hidepass.current[key] = r }} type="password" value={i.Password} className='bg-none outline-none w-[30px] sm:w-[70px] max-w-[80px] ' disabled={true} />
 
                                             <div className='h-[20px] cursor-pointer' title='copy' onClick={() => copytext(i.Password)} >
 
