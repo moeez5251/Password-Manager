@@ -41,9 +41,23 @@ const Login = () => {
             });
             return;
         }
+        if (data.name.trim().includes(" ")) {
+            toast.error('Username does not contain any spaces', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+            });
+            return;
+        }
+
         document.querySelector(".btn-dis").disabled = true;
         account.create(`${data.name}`, `${data.email}`, `${data.password}`, `${data.name}`)
-        .then(function () {
+            .then(function () {
                 toast.success("Account Created Successfully", {
                     position: "top-right",
                     autoClose: 3000,
@@ -112,8 +126,8 @@ const Login = () => {
                     </form>
                 </div>
             </div>
-            <Footer2/>
-        </> 
+            <Footer2 />
+        </>
     )
 }
 
