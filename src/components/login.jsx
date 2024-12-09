@@ -1,11 +1,12 @@
 import React from 'react'
 import { Client, Account } from 'appwrite';
 import { useForm } from "react-hook-form";
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink, useNavigate } from 'react-router';
 import Navbar from './navbar';
+import Footer2 from './footer2';
 const Signin = () => {
   let navigate = useNavigate();
   const projectid = import.meta.env.VITE_PROJECT_ID
@@ -27,8 +28,10 @@ const Signin = () => {
     }
   }
   const onSubmit = async (data) => {
+    document.querySelector(".btn-dis").disabled = true;
     const promise = account.createEmailPasswordSession(`${data.email1}`, `${data.password1}`);
     promise.then(function () {
+      document.querySelector(".btn-dis").disabled = false;
       toast.success("Login Successfully ", {
 
         position: "top-right",
@@ -42,8 +45,8 @@ const Signin = () => {
 
       });
       navigate("/main");
+
     }, async function (e) {
-      console.log(e);
       toast.error("Invalid email / password", {
         position: "top-right",
         autoClose: 3000,
@@ -54,10 +57,26 @@ const Signin = () => {
         progress: undefined,
         theme: "dark",
       });
+      document.querySelector(".btn-dis").disabled = false;
+
     });
 
   }
+  useEffect(() => {
+   ( async () => {
+      try {
+        let user = await account.get();
 
+        if (user) {
+          account.deleteSessions();
+        }
+      }
+      catch (e) {
+        console.clear();
+      }
+    })()
+    
+  },)
 
 
   return (
@@ -76,7 +95,7 @@ const Signin = () => {
 
       </div>
       <Navbar />
-      <div className=' flex items-center relative sm:top-24 top-16 flex-col gap-10 signin-page'>
+      <div className=' flex items-center relative top-20 lg:top-44  flex-col gap-10 signin-page'>
 
         <h2 className='text-white font-bold text-3xl'>Sign In</h2>
         <div className='flex flex-col w-full items-center '>
@@ -92,11 +111,12 @@ const Signin = () => {
 
             </div>
 
-            <button className='bg-black w-fit mx-auto px-4 py-2 rounded-xl font-semibold  border-2 border-black hover:border-white ' type='submit'>Login</button>
+            <button className='bg-black w-fit mx-auto px-4 py-2 rounded-xl font-semibold  border-2 border-black hover:border-white btn-dis disabled:bg-gray-950 disabled:text-white disabled:border-none disabled:cursor-wait ' type='submit'>Login</button>
             <p className='text-center'>No Acount ? <NavLink to="/" className='text-yellow-300 font-extrabold cursor-pointer login'  >Sign Up</NavLink> here</p>
           </form>
         </div>
       </div>
+      <Footer2/>
     </>
   )
 }
