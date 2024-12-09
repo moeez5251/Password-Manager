@@ -212,7 +212,7 @@ return (
                 </lord-icon>
             </button>
         </div>
-        <div className="passwords  max-w-full  sm:max-w-[90%] md:max-w-[95%] mx-auto">
+        <div className="passwords  max-w-full  md:max-w-[90%] mx-auto">
             <h2 className='font-bold text-xl mb-2'>Your Passwords</h2>
             {passwords.length === 0 && <div>No Password to show</div>}
             {passwords.length !== 0 &&
