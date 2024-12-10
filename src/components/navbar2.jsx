@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect } from 'react';
+import { useEffect,useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { Client, Account } from 'appwrite';
 const Navbar = () => {
@@ -19,6 +19,19 @@ const Navbar = () => {
         account.deleteSessions();
         navigate("/");
     }
+    const back=useRef();
+    useEffect(() => {
+       ( async () => {
+            let user=await account.get();
+            back.current.innerHTML=user.$id.charAt(0).toUpperCase();
+            var randomColor = Math.floor(Math.random() * 16777215).toString(16)
+            back.current.style.backgroundColor="#"+randomColor;
+            back.current.title=user.$id;
+        })()
+    
+      
+    }, [])
+    
     return (
         <nav className='bg-slate-900 text-white  justify-between  h-16 py-2 relative '>
             <div className='flex items-center justify-between max-w-[90%] sm:max-w-[70%] mx-auto h-full'>
@@ -30,20 +43,18 @@ const Navbar = () => {
                 </div>
 
                 <button
-                    title="profile"
-                    className="btn bg-orange-500 p-1 rounded-xl shadow-lg shadow-[#00000026] hover:shadow-inner transform transition-all duration-500 hover:translate-y-1 border border-transparent hover:border-[#0000001A] cursor-pointer w-[40px] overflow-hidden hover:w-[110px]"
+                    
+                    className="btn bg-none p-1 rounded-xl shadow-lg shadow-[#00000026] hover:shadow-inner transform transition-all duration-500 hover:translate-y-1 border border-transparent hover:border-[#0000001A] cursor-pointer w-[50px] overflow-hidden hover:w-[110px] flex gap-7"
                 >
-                    <div className="profile flex gap-7 items-center">
-                        <span className="material-symbols-outlined text-white text-3xl">
-                            account_circle
-                        </span>
+                    <div ref={back} className="text-white text-2xl font-bold  rounded-full px-[10px] py-[4px]"></div>
+
                         <span onClick={handledeletesession}
                             title="logout"
                             className="material-symbols-outlined text-white text-3xl"
                         >
                             logout
                         </span>
-                    </div>
+                    {/* </div> */}
                 </button>
             </div>
 

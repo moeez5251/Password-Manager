@@ -212,7 +212,7 @@ return (
                 </lord-icon>
             </button>
         </div>
-        <div className="passwords  max-w-full  md:max-w-[90%] mx-auto">
+        <div className="passwords  max-w-full mx-3  md:max-w-[90%] md:mx-auto mt-3">
             <h2 className='font-bold text-xl mb-2'>Your Passwords</h2>
             {passwords.length === 0 && <div>No Password to show</div>}
             {passwords.length !== 0 &&
@@ -230,7 +230,7 @@ return (
                         {passwords.map((i, key) => {
                             return (
                                 <tr key={key}>
-                                    <td className='font-medium text-center py-2 sm:min-w-36 min-w-10 max-w-60 '>
+                                    <td className='font-medium px-5 text-center py-2 sm:min-w-36 min-w-10 max-w-60 '>
                                         <div className='flex items-center justify-center ' >
 
                                             <a className='font-semibold' href={i.URL} target='_blank'>{i.URL}</a>
@@ -247,7 +247,7 @@ return (
                                             </div>
                                         </div>
                                     </td>
-                                    <td className='font-medium text-center sm:py-2 sm:min-w-36 min-w-10 max-w-60'>
+                                    <td className='font-medium px-5 text-center sm:py-2 sm:min-w-36 min-w-10 max-w-60'>
                                         <div className='flex items-center justify-center '>
                                             <span className='font-semibold'>
                                                 {i.Username}
@@ -265,9 +265,9 @@ return (
                                             </div>
                                         </div>
                                     </td>
-                                    <td className='font-medium text-center sm:py-2 sm:min-w-36 min-w-10 max-w-60'>
+                                    <td className='font-medium px-5 text-center sm:py-2 sm:min-w-36 min-w-10 max-w-60'>
                                         <div className='flex items-center justify-center '>
-                                            <input name='pass-inp' ref={(r) => { hidepass.current[key] = r }} type="password" value={i.Password} className='bg-none outline-none w-[30px] sm:w-[70px] max-w-[80px] ' disabled={true} />
+                                            <input name='pass-inp' ref={(r) => { hidepass.current[key] = r }} type="password" value={i.Password} className='bg-none outline-none w-fit max-w-[40px] sm:w-[70px] sm:max-w-[80px] ' disabled={true} />
 
                                             <div className='h-[20px] cursor-pointer' title='copy' onClick={() => copytext(i.Password)} >
 
@@ -285,7 +285,7 @@ return (
                                             </span>
                                         </div>
                                     </td>
-                                    <td className='font-medium text-center sm:py-2 sm:min-w-36 min-w-10 max-w-60'>
+                                    <td className='font-medium px-5 text-center sm:py-2 sm:min-w-36 min-w-10 max-w-60'>
                                         <div className='flex items-center justify-center sm:gap-7 gap-3'>
                                             <span className='cursor-pointer sm:w-full w-[20px]' title='edit' onClick={() => { editpass(i.$id) }}>
                                                 <lord-icon
