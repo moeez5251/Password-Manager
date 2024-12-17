@@ -217,7 +217,7 @@ return (
             {passwords.length === 0 && <div>No Password to show</div>}
             {passwords.length !== 0 &&
 
-                <table className="table-auto w-full text-center  rounded-md overflow-scroll sm:overflow-hidden block overflow-y-auto h-[170px] scrollbar-custom ">
+                <table className="table-auto w-full text-center  rounded-md overflow-scroll block  h-[170px] scrollbar-custom ">
                     <thead className=' bg-orange-600 text-white '>
                         <tr>
                             <th className='py-2 md:w-[33%] '>Site</th>
