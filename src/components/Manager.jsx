@@ -16,7 +16,7 @@ const Manager = () => {
     })
     const [passwords, setpasswords] = useState([])
     const client = new Client()
-        .setEndpoint('https://cloud.appwrite.io/v1')
+        .setEndpoint('https://fra.cloud.appwrite.io/v1')
         .setProject(`${projectid}`);
     const databases = new Databases(client);
     const account = new Account(client);
