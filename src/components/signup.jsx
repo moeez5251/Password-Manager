@@ -9,7 +9,6 @@ import Navbar from './navbar';
 import Footer2 from './footer2';
 const Login = () => {
     const projectid = import.meta.env.VITE_PROJECT_ID
-    console.log(projectid);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const ref = useRef();
     const [inp, setinp] = useState("password")
