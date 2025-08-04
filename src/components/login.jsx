@@ -14,7 +14,7 @@ const Signin = () => {
   const ref = useRef();
   const [inp, setinp] = useState("password")
   const client = new Client()
-    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setEndpoint('https://fra.cloud.appwrite.io/v1')
     .setProject(`${projectid}`);
   const account = new Account(client);
   const handleinp = () => {

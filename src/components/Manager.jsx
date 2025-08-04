@@ -7,6 +7,7 @@ const Manager = () => {
     const projectid = import.meta.env.VITE_PROJECT_ID
     const DatabaseID = import.meta.env.VITE_DB
     const CollectionID = import.meta.env.VITE_CID
+    console.log(projectid, DatabaseID, CollectionID);
     const [user, setuser] = useState({})
     const [form, setform] = useState({
         site: "",
